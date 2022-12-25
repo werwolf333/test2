@@ -1,0 +1,19 @@
+{
+    "name": "werwolf/test2",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Werwolf",
+            "email": "slmig@mail.ru"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Werwolf\\Test2\\": "src/"
+        }
+    }
+}

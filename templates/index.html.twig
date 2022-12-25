@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<meta charset="utf-8">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="col-sm-6 col-sm-offset-3" id="result_form">
+				{% if key!='' %}
+					Hello {{key}} <a href="logout">выйти</a>
+				{% else %}
+					<a href="login">авторизируйтесь</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>					
+	</body>
+</html>
