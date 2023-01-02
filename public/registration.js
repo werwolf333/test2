@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	$("#registration_form").removeClass('hidden');
 	$("#registration_form").on('submit', function (event){
 		event.preventDefault();
 		sendForm('registration_form', '');

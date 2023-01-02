@@ -10,6 +10,10 @@ class RegistrationController extends Controller
 {
     public function get(Request $request): Response
     {
+        session_start();
+        if(!empty($_SESSION['user_login'])){
+            return $this->redirect('/index');
+        }
         return $this->render('registration.html.twig');
     }
 
@@ -23,6 +27,10 @@ class RegistrationController extends Controller
             $errors["user_login"] = $errors["user_login"] . "login is blank; ";
             $errors["errors"] = true;
         }
+        if (preg_match('/\s/', $_POST["user_login"])) {
+            $errors["user_login"] = $errors["user_login"] . "you can't use a space; ";
+            $errors["errors"] = true;
+        }
         if (!preg_match('/\w{6,}/', $_POST["user_login"])) {
             $errors["user_login"] = $errors["user_login"] . "minimum 6 symbols in login; ";
             $errors["errors"] = true;
@@ -30,6 +38,14 @@ class RegistrationController extends Controller
         $errors["user_password"] = '';
         if (empty($_POST["user_password"])) {
             $errors["user_password"] = $errors["user_password"] . "password is blank; ";
+            $errors["errors"] = true;
+        }
+        if (preg_match('/\[|\]|\\|\^|\$|\.|\||\?|\*|\+|\(|\)/',$_POST["user_password"])) {
+            $errors["user_password"] = $errors["user_password"] . "special characters cannot be used [ ] \ ^ $ . | ? * + ( ); ";
+            $errors["errors"] = true;
+        }
+        if (preg_match('/\s/', $_POST["user_password"])) {
+            $errors["user_password"] = $errors["user_password"] . "you can't use a space; ";
             $errors["errors"] = true;
         }
         if (!preg_match('/\w{6,}/', $_POST["user_password"])) {
@@ -61,15 +77,20 @@ class RegistrationController extends Controller
         $errors["user_name"] = '';
         if (empty($_POST["user_name"])) {
             $errors["user_name"] = $errors["user_name"] . "name is blank; ";
+            $errors["errors"] = true;
         }
-        $errors["user_name"] = '';
         if (!preg_match('/[a-zA-Z]{2,}/', $_POST["user_name"], $matches)) {
             $errors["user_name"] = $errors["user_name"] . "minimum 2 letters in name; ";
+            $errors["errors"] = true;
+        }
+        if (preg_match('/\s/', $_POST["user_name"])) {
+            $errors["user_name"] = $errors["user_name"] . "you can't use a space; ";
+            $errors["errors"] = true;
         }
         $db = new DB();
-        $db = $db->getAll();
-        if ($db != '') {
-            foreach ($db as $row) {
+        $rows = $db->getAll();
+        if ($rows != '') {
+            foreach ($rows as $row) {
                 if ($row["login"] == $_POST["user_login"]) {
                     $errors["user_login"] = 'this login is busy; ';
                     $errors["errors"] = true;
@@ -80,8 +101,10 @@ class RegistrationController extends Controller
                 }
             }
         }
-        $db = new DB();
-        $db->addRow($_POST["user_login"], $_POST["user_password"], $_POST["user_email"], $_POST["user_name"]);
+        if($errors["errors"] == false){
+            $db->addRow($_POST["user_login"], $_POST["user_password"], $_POST["user_email"], $_POST["user_name"]);
+        }
+        
         return $this->json($errors);
     }
 }

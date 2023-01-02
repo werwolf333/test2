@@ -4,7 +4,7 @@ namespace Werwolf\Test2;
 
 class DB
 {
-    public function getAll(): array
+    public function getAll(): ?array
     {
         return json_decode(file_get_contents(dirname(__DIR__) . '/db.json'), true);
     }

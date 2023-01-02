@@ -10,6 +10,11 @@ class LoginController extends Controller
 {
     public function get(Request $request): Response
     {
+        session_start();
+        if (!empty($_SESSION['user_login'])) {
+            return $this->redirect('/index');
+        }
+
         return $this->render('login.html.twig');
     }
 
@@ -30,7 +35,7 @@ class LoginController extends Controller
             $errors["user_password"] = $errors["user_password"] . "password is blank; ";
             $errors["errors"] = true;
         }
-        
+
         if (empty($errors["user_login"])) {
             $db = new DB();
             $db = $db->getAll();

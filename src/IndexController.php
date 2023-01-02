@@ -11,10 +11,9 @@ class IndexController extends Controller
     public function get(Request $request): Response
     {
         session_start();
-        if(empty($_SESSION['user_login'])){
+        if (empty($_SESSION['user_login'])) {
             $args = ['key' => ''];
-        }
-        else{
+        } else {
             $args = ['key' => $_SESSION['user_login']];
         }
         return $this->render('index.html.twig', $args);
