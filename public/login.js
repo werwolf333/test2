@@ -15,7 +15,7 @@ function sendForm(login_form, url) {
 		success: function (response) {
 			var errors = $.parseJSON(response);
 			if(errors["errors"]==false){
-				window.location.href = "/index";
+				window.location.href = "/";
 			}
 			else{
 				$('#user_login_error').html(errors["user_login"]);

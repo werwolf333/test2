@@ -13,7 +13,7 @@ class Router
             $controller = new RegistrationController();
         } elseif ($request->getUri() == '/login') {
             $controller = new LoginController();
-        } elseif ($request->getUri() == '/index') {
+        } elseif ($request->getUri() == '/') {
             $controller = new IndexController();
         } elseif ($request->getUri() == '/logout') {
             $controller = new LogoutController();

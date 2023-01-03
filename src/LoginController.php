@@ -12,7 +12,7 @@ class LoginController extends Controller
     {
         session_start();
         if (!empty($_SESSION['user_login'])) {
-            return $this->redirect('/index');
+            return $this->redirect('/');
         }
 
         return $this->render('login.html.twig');
